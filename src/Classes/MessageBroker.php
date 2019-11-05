@@ -10,7 +10,7 @@ namespace Souktel\MessageBroker\Classes;
  * Class EventManager
  * @package App\Events
  */
-class EventManager
+class MessageBroker
 {
 
     /** @var DatabaseLogging|null $databaseLogging */

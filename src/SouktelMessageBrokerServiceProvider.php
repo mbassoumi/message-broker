@@ -2,7 +2,9 @@
 
 namespace Souktel\MessageBroker;
 
-use Souktel\MessageBroker\Classes\EventManager;
+use Souktel\MessageBroker\Classes\MessageBroker;
+use Illuminate\Support\ServiceProvider;
+
 
 class SouktelMessageBrokerServiceProvider extends ServiceProvider
 {
@@ -17,9 +19,10 @@ class SouktelMessageBrokerServiceProvider extends ServiceProvider
     {
 
         // binding Event Manager to service container
-        $this->app->singelton('EventManager', function () {
-            return new EventManager;
+        $this->app->singelton('MessageBroker', function () {
+            return new MessageBroker;
         });
+
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/souktel-message-broker.php', 'souktel-message-broker'
