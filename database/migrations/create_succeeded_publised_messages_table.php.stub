@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateSucceededPublishedMessagesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create(config('souktel-message-broker.database.succeeded_published_messages'), function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('queue');
+                $table->string('routing_key');
+                $table->string('payload');
+                $table->timestamp('published_at');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down()
+    {
+        Schema::dropIfExists(config('souktel-message-broker.database.succeeded_published_messages'));
+    }
+}

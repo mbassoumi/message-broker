@@ -25,7 +25,7 @@ class DatabaseLogging
         try {
             $eventName = $queue . ':' . $routingKey;
             optional($this->logger)->log("Event Name: $eventName. \n Event Body: $message->body. \n Error: {$errorMessage}", 'error');
-            DB::table(config('souktel-message-broker.database.failed_events'))->insert([
+            DB::table(config('souktel-message-broker.database.failed_messages'))->insert([
                 'queue'         => $queue,
                 'routing_key'   => $routingKey,
                 'payload'       => $payload,
@@ -40,7 +40,7 @@ class DatabaseLogging
     public function storeSucceededConsumedEvents($queue, $routingKey, $payload)
     {
         try {
-            DB::table(config('souktel-message-broker.database.succeeded_events'))->insert([
+            DB::table(config('souktel-message-broker.database.succeeded_messages'))->insert([
                 'queue'       => $queue,
                 'routing_key' => $routingKey,
                 'payload'     => $payload,
@@ -55,7 +55,7 @@ class DatabaseLogging
     public function storeSucceedPublishedEvents($roteKey, $message, $queue)
     {
         try {
-            DB::table(config('souktel-message-broker.database.succeed_published_events'))->insert([
+            DB::table(config('souktel-message-broker.database.succeed_published_messages'))->insert([
                 'queue'        => $queue,
                 'routing_key'  => $roteKey,
                 'payload'      => $message,
@@ -70,11 +70,11 @@ class DatabaseLogging
     public function storeFailedPublishedEvents($roteKey, $message, $queue, $errorMessage)
     {
         try {
-            DB::table(config('souktel-message-broker.database.failed_published_events'))->insert([
+            DB::table(config('souktel-message-broker.database.failed_published_messages'))->insert([
                 'queue'        => $queue,
                 'routing_key'  => $roteKey,
                 'payload'      => $message,
-                'published_at' => Carbon::now()
+                'failed_at' => Carbon::now()
             ]);
         } catch (\Exception $exception) {
             $eventName = $queue . ':' . $roteKey;
