@@ -8,7 +8,6 @@ class SouktelMessageBrokerServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-
         $this->publishes([
             __DIR__ . '/config/souktel-message-broker.php' => config_path('souktel-message-broker.php'),
         ], 'config');
