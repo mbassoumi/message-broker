@@ -1,6 +1,7 @@
 {
     "name": "souktel/message-broker",
     "description": "Manage Message Broker communication",
+    "license": "MIT",
     "authors": [
         {
             "name": "majdbassoumi",
