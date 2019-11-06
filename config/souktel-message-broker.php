@@ -4,11 +4,11 @@
 return [
 
     'database' => [
-        'enable'                      => true,
-        'succeeded_consumed_messages' => 'succeeded_consumed_messages',
-        'failed_consumed_messages'    => 'failed_consumed_messages',
-        'succeed_published_messages'  => 'succeed_published_messages',
-        'failed_published_messages'   => 'failed_published_messages'
+        'enable'                       => true,
+        'succeeded_consumed_messages'  => 'succeeded_consumed_messages',
+        'failed_consumed_messages'     => 'failed_consumed_messages',
+        'succeeded_published_messages' => 'succeeded_published_messages',
+        'failed_published_messages'    => 'failed_published_messages'
     ],
 
     'log' => [

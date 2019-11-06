@@ -4,6 +4,7 @@ namespace Souktel\MessageBroker;
 
 use Souktel\MessageBroker\Classes\MessageBroker;
 use Illuminate\Support\ServiceProvider;
+use Souktel\MessageBroker\Commands\MessageConsumer;
 
 
 class SouktelMessageBrokerServiceProvider extends ServiceProvider
@@ -38,6 +39,12 @@ class SouktelMessageBrokerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . '/../config/souktel-message-broker.php', 'souktel-message-broker'
         );
+
+        $this->app->bind('command.messages:consume', MessageConsumer::class);
+
+        $this->commands([
+            'command.messages:consume',
+        ]);
 
     }
 }

@@ -25,7 +25,7 @@ class DatabaseLogging
         try {
             $eventName = $queue . ':' . $routingKey;
             optional($this->logger)->log("Event Name: $eventName. \n Event Body: $message->body. \n Error: {$errorMessage}", 'error');
-            DB::table(config('souktel-message-broker.database.failed_messages'))->insert([
+            DB::table(config('souktel-message-broker.database.failed_consumed_messages'))->insert([
                 'queue'         => $queue,
                 'routing_key'   => $routingKey,
                 'payload'       => $payload,
@@ -40,7 +40,7 @@ class DatabaseLogging
     public function storeSucceededConsumedEvents($queue, $routingKey, $payload)
     {
         try {
-            DB::table(config('souktel-message-broker.database.succeeded_messages'))->insert([
+            DB::table(config('souktel-message-broker.database.succeeded_consumed_messages'))->insert([
                 'queue'       => $queue,
                 'routing_key' => $routingKey,
                 'payload'     => $payload,
@@ -55,7 +55,7 @@ class DatabaseLogging
     public function storeSucceedPublishedEvents($roteKey, $message, $queue)
     {
         try {
-            DB::table(config('souktel-message-broker.database.succeed_published_messages'))->insert([
+            DB::table(config('souktel-message-broker.database.succeeded_published_messages'))->insert([
                 'queue'        => $queue,
                 'routing_key'  => $roteKey,
                 'payload'      => $message,
