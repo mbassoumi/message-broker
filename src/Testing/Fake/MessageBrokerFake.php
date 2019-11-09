@@ -35,7 +35,7 @@ class MessageBrokerFake
     public function publish($roteKey, $message, $queue)
     {
 
-        static::$messages = [
+        static::$message = [
             'roteKey' => $roteKey,
             'message' => $message,
         ];
@@ -66,7 +66,7 @@ class MessageBrokerFake
 
     protected function assertTrue($callback)
     {
-        PHPUnit::assertTrue($callback(static::$messages),
+        PHPUnit::assertTrue($callback(static::$message),
             'condation return false');
     }
 
