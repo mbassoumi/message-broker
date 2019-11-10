@@ -52,32 +52,32 @@ class DatabaseLogging
         }
     }
 
-    public function storeSucceedPublishedEvents($roteKey, $message, $queue)
+    public function storeSucceedPublishedEvents($routeKey, $message, $queue)
     {
         try {
             DB::table(config('souktel-message-broker.database.succeeded_published_messages'))->insert([
                 'queue'        => $queue,
-                'routing_key'  => $roteKey,
+                'routing_key'  => $routeKey,
                 'payload'      => $message,
                 'published_at' => Carbon::now()
             ]);
         } catch (\Exception $exception) {
-            $eventName = $queue . ':' . $roteKey;
+            $eventName = $queue . ':' . $routeKey;
             optional($this->logger)->log("Failed to store published event {$eventName}, \n Error: {$exception->getMessage()}");
         }
     }
 
-    public function storeFailedPublishedEvents($roteKey, $message, $queue, $errorMessage)
+    public function storeFailedPublishedEvents($routeKey, $message, $queue, $errorMessage)
     {
         try {
             DB::table(config('souktel-message-broker.database.failed_published_messages'))->insert([
                 'queue'        => $queue,
-                'routing_key'  => $roteKey,
+                'routing_key'  => $routeKey,
                 'payload'      => $message,
                 'failed_at' => Carbon::now()
             ]);
         } catch (\Exception $exception) {
-            $eventName = $queue . ':' . $roteKey;
+            $eventName = $queue . ':' . $routeKey;
             optional($this->logger)->log("Failed to store published event {$eventName}, \n Error: {$exception->getMessage()}");
         }
     }

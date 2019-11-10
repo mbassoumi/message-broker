@@ -35,20 +35,20 @@ class MessageBroker
      * publish event to specific queue on RabbitMQ with specific route-key
      * routeKey present the name of fired event
      *
-     * @param $roteKey
+     * @param $routeKey
      * @param array|string $message
      * @param $queue
      */
-    public function publish($roteKey, $message, $queue)
+    public function publish($routeKey, $message, $queue)
     {
         try {
             if (!is_string($message)) {
                 $message = json_encode($message);
             }
-            \Amqp::publish($roteKey, $message, ['queue' => $queue]);
-            optional($this->databaseLogging)->storeSucceedPublishedEvents($roteKey, $message, $queue);
+            \Amqp::publish($routeKey, $message, ['queue' => $queue]);
+            optional($this->databaseLogging)->storeSucceedPublishedEvents($routeKey, $message, $queue);
         } catch (\Exception $exception) {
-            optional($this->databaseLogging)->storeFailedPublishedEvents($roteKey, $message, $queue, $exception->getMessage());
+            optional($this->databaseLogging)->storeFailedPublishedEvents($routeKey, $message, $queue, $exception->getMessage());
         }
     }
 

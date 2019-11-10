@@ -28,16 +28,17 @@ class MessageBrokerFake
     /**
      * fake publish function
      *
-     * @param $roteKey
+     * @param $routeKey
      * @param array|string $message
      * @param $queue
      */
-    public function publish($roteKey, $message, $queue)
+    public function publish($routeKey, $message, $queue)
     {
 
         static::$message = [
-            'roteKey' => $roteKey,
-            'message' => $message,
+            'routeKey' => $routeKey,
+            'message'  => $message,
+            'queue'    => $queue,
         ];
     }
 
