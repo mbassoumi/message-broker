@@ -3,6 +3,8 @@
 
 return [
 
+    'enable' => env('MESSAGE_BROKER_ENABLE', true),
+
     'database' => [
         'enable'                       => true,
         'succeeded_consumed_messages'  => 'succeeded_consumed_messages',

@@ -32,6 +32,7 @@ in config file
 
 | variable  | description | 
 | ------------- | ------------- |
+| enable | (boolean) if false then MessageBroker will be fake instance |
 | database  | if enable = true, all published messages will be stored in database. you can change tables name before run migration command.   |
 | log  | if enable = true, there will be some output logs through channel name in config file   | |
 | settings  | Message Broker settings  |

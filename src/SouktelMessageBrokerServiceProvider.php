@@ -5,6 +5,7 @@ namespace Souktel\MessageBroker;
 use Souktel\MessageBroker\Classes\MessageBroker;
 use Illuminate\Support\ServiceProvider;
 use Souktel\MessageBroker\Commands\MessageConsumer;
+use Souktel\MessageBroker\Testing\Fake\MessageBrokerFake;
 
 
 class SouktelMessageBrokerServiceProvider extends ServiceProvider
@@ -27,8 +28,13 @@ class SouktelMessageBrokerServiceProvider extends ServiceProvider
     public function register()
     {
 
+        $this->app->register(\Bschmitt\Amqp\LumenServiceProvider::class);
+
         // binding Event Manager to service container
         $this->app->singleton('MessageBroker', function () {
+            if (!config('souktel-message-broker.enable')) {
+                return new MessageBrokerFake;
+            }
             return new MessageBroker;
         });
 
