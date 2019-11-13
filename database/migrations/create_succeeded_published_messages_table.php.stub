@@ -15,7 +15,7 @@ class CreateSucceededPublishedMessagesTable extends Migration
                 $table->increments('id');
                 $table->string('queue');
                 $table->string('routing_key');
-                $table->string('payload');
+                $table->json('payload');
                 $table->timestamp('published_at');
         });
     }
