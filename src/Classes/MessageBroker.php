@@ -48,7 +48,7 @@ class MessageBroker
             \Amqp::publish($routeKey, $message, ['queue' => $queue]);
             optional($this->databaseLogging)->storeSucceedPublishedEvents($routeKey, $message, $queue);
         } catch (\Exception $exception) {
-            optional($this->databaseLogging)->storeFailedPublishedEvents($routeKey, $message, $queue, $exception->getMessage());
+            optional($this->databaseLogging)->storeFailedPublishedEvents($routeKey, $message, $queue, $exception);
         }
     }
 
@@ -69,7 +69,7 @@ class MessageBroker
                 event($eventName, [json_decode($message->body, true)]);
                 optional($this->databaseLogging)->storeSucceededConsumedEvents($queue, $routingKey, $message->body);
             } catch (\Exception $exception) {
-                optional($this->databaseLogging)->storeFailedConsumedEvents($queue, $routingKey, $message->body, $message, $exception->getMessage());
+                optional($this->databaseLogging)->storeFailedConsumedEvents($queue, $routingKey, $message->body, $message, $exception);
             }
             $resolver->acknowledge($message);
         }, [

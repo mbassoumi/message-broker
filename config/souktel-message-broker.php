@@ -15,7 +15,7 @@ return [
 
     'log' => [
         'enable'  => true,
-        'channel' => 'stack',
+        'channel' => env('MESSAGE_BROKER_LOG_CHANNEL', 'slack'),
     ],
 
     'settings' => [

@@ -19,21 +19,21 @@ class DatabaseLogging
         $this->logger = $logger;
     }
 
-    public function storeFailedConsumedEvents($queue, $routingKey, $payload, $message, $errorMessage)
+    public function storeFailedConsumedEvents($queue, $routingKey, $payload, $message, $exception)
     {
         $eventName = '';
         try {
             $eventName = $queue . ':' . $routingKey;
-            optional($this->logger)->log("Event Name: $eventName. \n Event Body: $message->body. \n Error: {$errorMessage}", 'error');
+            optional($this->logger)->log("Event Name: $eventName. \n Event Body: $message->body. \n Error: {$exception->getMessage()}", 'error');
             DB::table(config('souktel-message-broker.database.failed_consumed_messages'))->insert([
-                'queue'         => $queue,
-                'routing_key'   => $routingKey,
-                'payload'       => $payload,
-                'error_message' => $errorMessage,
-                'failed_at'     => Carbon::now()
+                'queue'       => $queue,
+                'routing_key' => $routingKey,
+                'payload'     => $payload,
+                'exception'   => $exception,
+                'failed_at'   => Carbon::now()
             ]);
-        } catch (\Exception $exception) {
-            optional($this->logger)->log("Failed to store failed event {$eventName} with error = {$errorMessage}, \n Error: {$exception->getMessage()}", 'error');
+        } catch (\Exception $databaseException) {
+            optional($this->logger)->log("Failed to store failed event {$eventName} with error = {$exception->getMessage()}, \n Error: {$databaseException->getMessage()}", 'error');
         }
     }
 
@@ -67,19 +67,19 @@ class DatabaseLogging
         }
     }
 
-    public function storeFailedPublishedEvents($routeKey, $message, $queue, $errorMessage)
+    public function storeFailedPublishedEvents($routeKey, $message, $queue, $exception)
     {
         try {
             DB::table(config('souktel-message-broker.database.failed_published_messages'))->insert([
-                'queue'        => $queue,
-                'routing_key'  => $routeKey,
-                'payload'      => $message,
-                'error_message' => $errorMessage,
-                'failed_at' => Carbon::now()
+                'queue'         => $queue,
+                'routing_key'   => $routeKey,
+                'payload'       => $message,
+                'exception' => $exception,
+                'failed_at'     => Carbon::now()
             ]);
-        } catch (\Exception $exception) {
+        } catch (\Exception $databaseException) {
             $eventName = $queue . ':' . $routeKey;
-            optional($this->logger)->log("Failed to store published event {$eventName}, \n Error: {$exception->getMessage()}");
+            optional($this->logger)->log("Failed to store published event {$eventName}, \n Error: {$databaseException->getMessage()}");
         }
     }
 }

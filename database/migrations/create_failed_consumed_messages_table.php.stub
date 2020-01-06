@@ -16,7 +16,7 @@ class CreateFailedConsumedMessagesTable extends Migration
                 $table->string('queue');
                 $table->string('routing_key');
                 $table->json('payload');
-                $table->longText('error_message');
+                $table->longText('exception');
                 $table->timestamp('failed_at');
         });
     }
