@@ -74,6 +74,7 @@ class DatabaseLogging
                 'queue'        => $queue,
                 'routing_key'  => $routeKey,
                 'payload'      => $message,
+                'error_message' => $errorMessage,
                 'failed_at' => Carbon::now()
             ]);
         } catch (\Exception $exception) {
