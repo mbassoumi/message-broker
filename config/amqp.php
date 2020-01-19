@@ -19,6 +19,11 @@ return [
     'properties' => [
 
         'production' => [
+            'test_env'             => env('SOUKTEL_TEST'),
+            'test_static'          => 'SOUKTEL_TEST',
+            'test_config'           => config('souktel-message-broker.settings.souktel_test'),
+
+
             'host'                 => config('souktel-message-broker.settings.host'),
             'port'                 => config('souktel-message-broker.settings.port'), // 5672
             'username'             => config('souktel-message-broker.settings.username'), //env('RABBITMQ_USERNAME'),
